@@ -412,6 +412,14 @@
 </div>
 
 <script>
+// Outside Claude artifacts there is no window.storage; back it with localStorage.
+if(!window.storage){try{const ls=window.localStorage;window.storage={
+  get:async k=>{const v=ls.getItem(k);return v==null?null:{key:k,value:v};},
+  set:async(k,v)=>{ls.setItem(k,v);return {key:k,value:v};},
+  delete:async k=>{ls.removeItem(k);return {key:k,deleted:true};}
+};}catch(e){}}
+</script>
+<script>
 "use strict";
 /* ============================================================
    VECTOR-1 — you are the model.
